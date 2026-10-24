@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#be123c">
+  <meta name="description" content="LifeDrop - Modern Blood Donation & Emergency Search Platform for Jharkhand. Connecting verified donors, certified blood banks in Ranchi, Bokaro, Jamshedpur, Ramgarh, Deoghar, and Hazaribagh.">
+  <title>LifeDrop | Emergency Blood Donation & Network Dashboard - Jharkhand</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- External Clean CSS Architecture -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+  <!-- 1. TOP EMERGENCY NETWORK TICKER -->
+  <div class="emergency-ticker" role="alert">
+    <div class="container ticker-content">
+      <div class="ticker-left">
+        <span class="pulse-badge"><span class="pulse-dot"></span> LIVE NETWORK</span>
+        <span>Jharkhand Blood Donation & Hospital Grid Active (Ranchi, Bokaro, Jamshedpur, Ramgarh, Deoghar, Hazaribagh)</span>
+      </div>
+      <div class="ticker-hotline">
+        <span>24/7 State Blood Helpline:</span>
+        <strong>1800-LIFE-DROP / 104</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ANTI-FRAUD & BROKER ALERT BANNER -->
+  <div class="safety-alert-bar">
+    <div class="container safety-alert-content">
+      <div>
+        <span>🛡️ <strong>Safety Warning:</strong> Voluntary blood donation is ALWAYS 100% FREE. Never pay cash or advance UPI money to any donor or agent.</span>
+      </div>
+      <div>
+        <a href="#report-alert" onclick="openReportModal('donor', 0, 'Commercial Broker / Demanding Money')">🚨 Report Suspicious Profile / Broker</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. STICKY PROFESSIONAL HEADER -->
+  <header>
+    <div class="container">
+      <nav class="navbar" aria-label="Main Navigation">
+        <a href="#" class="brand-logo">
+          <img src="images/logo.svg" alt="LifeDrop Blood Network Logo">
+          Life<span>Drop</span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#dashboard" class="active">Live Dashboard</a></li>
+          <li><a href="#camps">Camps & Drives</a></li>
+          <li><a href="#calculator">Eligibility Calculator</a></li>
+          <li><a href="#location-map">Map</a></li>
+          <li><a href="#find-blood">Find Blood</a></li>
+          <li><a href="#urgent">Urgent Board</a></li>
+          <li><a href="#donate">Become Donor</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <div class="nav-controls-group">
+            <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark / Day Emergency Mode">🌙 Dark</button>
+            <button id="langToggleBtn" class="lang-toggle-btn" onclick="toggleLanguage()" title="Switch Language">🌐 हिन्दी</button>
+            <button class="btn-admin" onclick="openAdminModal()" title="Hospital Staff & In-Charge Portal">🔒 Admin</button>
+          </div>
+          <button class="btn btn-emergency btn-sm" onclick="openRequestModal()">
+            🚨 Request Blood
+          </button>
+          <a href="#donate" class="btn btn-outline btn-sm">
+            ❤️ Be a Donor
+          </a>
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">☰</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 4. HERO SECTION WITH LIFEDROP GRAPHIC -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="hero-badge">
+            <span>♥ Jharkhand's Verified Emergency Blood Network</span>
+          </div>
+          <h1 class="hero-title" id="heroTitleText">
+            Every Drop Saves A Life.<br>
+            <span>Right Here in Jharkhand.</span>
+          </h1>
+          <p class="hero-desc" id="heroDescText">
+            LifeDrop connects patients directly with certified blood banks and verified voluntary lifesavers across <strong>Ranchi</strong> (Morabadi, Bariatu, Lalpur, Kantatoli, Firayalal, Khatal), <strong>Bokaro</strong> (Sectors 1 to 12 & Chas), <strong>Jamshedpur</strong>, <strong>Ramgarh</strong>, <strong>Deoghar</strong>, and <strong>Hazaribagh</strong>.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#find-blood" class="btn btn-primary btn-lg">
+              🔍 Find Blood in Jharkhand
+            </a>
+            <a href="#location-map" class="btn btn-outline btn-lg">
+              📍 View Nearest Blood Banks
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-stat">
+              <strong>100% Free</strong> Voluntary Network
+            </div>
+            <span>•</span>
+            <div class="trust-stat">
+              <strong>Zero</strong> Commercial Middlemen
+            </div>
+            <span>•</span>
+            <div class="trust-stat">
+              <strong>GPS-Verified</strong> Nearest Facilities
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="images/blood-drop-hero.svg" alt="LifeDrop Blood Donation Network Graphic">
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. LIVE OPERATIONAL DASHBOARD -->
+    <section id="dashboard" class="dashboard-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-title">
+            <h2>Live Operational Dashboard</h2>
+            <p>Real-time aggregated health statistics and blood inventory distribution across Jharkhand.</p>
+          </div>
+          <div>
+            <span class="live-indicator">
+              <span class="pulse-green"></span>
+              Auto-Synced with MySQL Database
+            </span>
+          </div>
+        </div>
+
+        <!-- 4 Primary KPI Counters -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap icon-red">🩸</div>
+            <div class="kpi-value" id="kpiUnits">--</div>
+            <div class="kpi-label">Total Units in Stock</div>
+            <div class="kpi-subtext">Across certified Jharkhand hospitals</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap icon-blue">👥</div>
+            <div class="kpi-value" id="kpiDonors">--</div>
+            <div class="kpi-label">Active Verified Donors</div>
+            <div class="kpi-subtext">In Ranchi, Bokaro & statewide</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap icon-green">🏥</div>
+            <div class="kpi-value" id="kpiCenters">--</div>
+            <div class="kpi-label">Certified Blood Centers</div>
+            <div class="kpi-subtext">RIMS, BGH, TMH & Sadar Hospitals</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap icon-amber">🚨</div>
+            <div class="kpi-value" id="kpiRequests">--</div>
+            <div class="kpi-label">Critical Patient Requests</div>
+            <div class="kpi-subtext">Awaiting immediate transfusions</div>
+          </div>
+        </div>
+
+        <!-- 8 Blood Groups Inventory Stock Matrix -->
+        <div class="dashboard-panel">
+          <div class="panel-header">
+            <div>
+              <h3>🩸 Real-Time Blood Group Stock Matrix</h3>
+              <p style="color:var(--muted); font-size:13px; margin-top:3px;">
+                Click any blood group to instantly filter search & locate nearest inventory in Jharkhand.
+              </p>
+            </div>
+            <span style="font-size:12px; color:var(--muted);">Live Database Status</span>
+          </div>
+
+          <div class="inventory-grid" id="inventoryGrid">
+            <!-- Dynamically populated from /api/stats -->
+            <div class="blood-unit-box"><div class="group-badge">A+</div><div class="unit-count">-- Units</div><span class="stock-status status-optimal">Loading</span></div>
+            <div class="blood-unit-box"><div class="group-badge">A-</div><div class="unit-count">-- Units</div><span class="stock-status status-moderate">Loading</span></div>
+            <div class="blood-unit-box"><div class="group-badge">B+</div><div class="unit-count">-- Units</div><span class="stock-status status-optimal">Loading</span></div>
+            <div class="blood-unit-box"><div class="group-badge">B-</div><div class="unit-count">-- Units</div><span class="stock-status status-low">Loading</span></div>
+            <div class="blood-unit-box"><div class="group-badge">AB+</div><div class="unit-count">-- Units</div><span class="stock-status status-optimal">Loading</span></div>
+            <div class="blood-unit-box"><div class="group-badge">AB-</div><div class="unit-count">-- Units</div><span class="stock-status status-low">Loading</span></div>
+            <div class="blood-unit-box"><div class="group-badge">O+</div><div class="unit-count">-- Units</div><span class="stock-status status-optimal">Loading</span></div>
+            <div class="blood-unit-box"><div class="group-badge">O-</div><div class="unit-count">-- Units</div><span class="stock-status status-low">Loading</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. INTERACTIVE LOCATION MAP (Blood Banks, Donors & Requesters) -->
+    <section id="location-map" class="location-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-title">
+            <h2>📍 Live Geolocation Map: Blood Banks, Donors & Requesters</h2>
+            <p>Locate accredited blood centers, voluntary donors, and emergency patient requests with real-time GPS precision.</p>
+          </div>
+          <div>
+            <button class="btn btn-primary btn-sm" id="btnDetectGPS" onclick="MapEngine.detectGPS()">
+              📍 Detect My Nearest Location
+            </button>
+          </div>
+        </div>
+
+        <div class="map-wrapper">
+          <div class="map-controls-bar">
+            <div>
+              <span style="font-size:13px; font-weight:700; margin-right:8px; color:var(--slate);">
+                Jump to District:
+              </span>
+              <div class="city-pills" id="cityPillsContainer" style="display:inline-flex;">
+                <button class="city-chip active" onclick="MapEngine.flyToCity('all')">All Jharkhand</button>
+                <button class="city-chip" onclick="MapEngine.flyToCity('ranchi')">Ranchi</button>
+                <button class="city-chip" onclick="MapEngine.flyToCity('bokaro')">Bokaro (Sectors 1-12)</button>
+                <button class="city-chip" onclick="MapEngine.flyToCity('jamshedpur')">Jamshedpur</button>
+                <button class="city-chip" onclick="MapEngine.flyToCity('ramgarh')">Ramgarh</button>
+                <button class="city-chip" onclick="MapEngine.flyToCity('deoghar')">Deoghar</button>
+                <button class="city-chip" onclick="MapEngine.flyToCity('hazaribagh')">Hazaribagh</button>
+              </div>
+            </div>
+
+            <div class="layer-toggles">
+              <span style="font-size:12px; color:var(--muted);">Filter Map Layers:</span>
+              <button class="layer-toggle-btn active" onclick="MapEngine.toggleLayer('centers', this)">🏥 Blood Banks</button>
+              <button class="layer-toggle-btn active" onclick="MapEngine.toggleLayer('donors', this)">❤️ Donors</button>
+              <button class="layer-toggle-btn active" onclick="MapEngine.toggleLayer('requests', this)">🚨 Emergency Requests</button>
+              <button class="layer-toggle-btn active" onclick="MapEngine.toggleLayer('camps', this)">⛺ Blood Camps</button>
+            </div>
+          </div>
+
+          <!-- Leaflet Interactive Map Container -->
+          <div id="bloodMap"></div>
+
+          <div class="map-legend">
+            <div class="legend-item"><span class="legend-dot dot-bank"></span><span>Certified Blood Bank / Hospital (Red)</span></div>
+            <div class="legend-item"><span class="legend-dot dot-donor"></span><span>Verified Voluntary Donor (Green)</span></div>
+            <div class="legend-item"><span class="legend-dot dot-request"></span><span>Urgent Patient Blood Need (Amber Beacon)</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:#10b981;"></span><span>Donation Camp (Tent)</span></div>
+            <div class="legend-item"><span class="legend-dot dot-user"></span><span>Your Current Position (Blue)</span></div>
+            <div id="gpsStatusBadge" style="margin-left:auto; font-weight:700; color:var(--primary); font-size:12px;">GPS: Ready</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. UPCOMING BLOOD CAMPS & MOBILE DRIVES IN JHARKHAND -->
+    <section id="camps" class="camps-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-title">
+            <h2 id="campsSectionTitle">Upcoming Blood Donation Camps in Jharkhand</h2>
+            <p id="campsSectionSub">Join mobile drives and voluntary blood donation camps near you in Ranchi, Bokaro, Jamshedpur, Ramgarh, Deoghar & Hazaribagh.</p>
+          </div>
+          <div>
+            <a href="#donate" class="btn btn-outline btn-sm">🙋 Join as Lifesaver</a>
+          </div>
+        </div>
+
+        <div class="camps-filter-bar">
+          <button class="city-chip active" onclick="document.querySelectorAll('.camps-filter-bar .city-chip').forEach(c=>c.classList.remove('active')); this.classList.add('active'); loadCamps('')">All Jharkhand</button>
+          <button class="city-chip" onclick="document.querySelectorAll('.camps-filter-bar .city-chip').forEach(c=>c.classList.remove('active')); this.classList.add('active'); loadCamps('Ranchi')">Ranchi</button>
+          <button class="city-chip" onclick="document.querySelectorAll('.camps-filter-bar .city-chip').forEach(c=>c.classList.remove('active')); this.classList.add('active'); loadCamps('Bokaro')">Bokaro</button>
+          <button class="city-chip" onclick="document.querySelectorAll('.camps-filter-bar .city-chip').forEach(c=>c.classList.remove('active')); this.classList.add('active'); loadCamps('Jamshedpur')">Jamshedpur</button>
+          <button class="city-chip" onclick="document.querySelectorAll('.camps-filter-bar .city-chip').forEach(c=>c.classList.remove('active')); this.classList.add('active'); loadCamps('Ramgarh')">Ramgarh</button>
+          <button class="city-chip" onclick="document.querySelectorAll('.camps-filter-bar .city-chip').forEach(c=>c.classList.remove('active')); this.classList.add('active'); loadCamps('Deoghar')">Deoghar</button>
+          <button class="city-chip" onclick="document.querySelectorAll('.camps-filter-bar .city-chip').forEach(c=>c.classList.remove('active')); this.classList.add('active'); loadCamps('Hazaribagh')">Hazaribagh</button>
+        </div>
+
+        <div class="camps-grid" id="campsGridContainer">
+          <!-- Dynamically populated from /api/camps -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. SMART SEARCH & FIND BLOOD SECTION -->
+    <section id="find-blood" class="search-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-title">
+            <h2>Find Blood Donors & Centers in Jharkhand</h2>
+            <p>Search by blood group, component, and locality (e.g. Morabadi, Bariatu, Lalpur, Bokaro Sector 4, Chas, Bistupur).</p>
+          </div>
+        </div>
+
+        <div class="search-card-container">
+          <form id="mainSearchForm" onsubmit="executeBloodSearch(event)">
+            <div class="search-form-grid">
+              <div class="form-group">
+                <label for="searchBloodGroup">Blood Group</label>
+                <select id="searchBloodGroup" class="form-control" required>
+                  <option value="">Choose Blood Group</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+" selected>O+</option>
+                  <option value="O-">O-</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="searchComponent">Component Type</label>
+                <select id="searchComponent" class="form-control">
+                  <option value="All">All Components</option>
+                  <option value="Whole blood">Whole Blood</option>
+                  <option value="Red cells" selected>Red Blood Cells (PRBC)</option>
+                  <option value="Platelets">Platelets (PRP/SDP)</option>
+                  <option value="Plasma">Fresh Frozen Plasma</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="searchCity">City or Locality</label>
+                <input type="text" id="searchCity" class="form-control" value="Ranchi" placeholder="e.g. Ranchi, Morabadi, Bariatu, Lalpur, Bokaro Sector 4, Chas..." required>
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="btnSearchSubmit" style="height:48px;">
+                  🔍 Search Live Stock & Donors
+                </button>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-top:14px; gap:10px;">
+              <label style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; cursor:pointer;">
+                <input type="checkbox" id="checkCompatibility" checked style="accent-color:var(--primary); width:16px; height:16px;">
+                <span>Include biologically compatible blood groups (e.g. O- universal red cell donor)</span>
+              </label>
+
+              <button type="button" class="btn btn-outline btn-sm" onclick="MapEngine.detectGPS()">
+                📍 Auto-Detect My City & Locality
+              </button>
+            </div>
+          </form>
+
+          <!-- Search Results Area -->
+          <div class="results-wrap" id="searchResultsContainer" style="display:none; margin-top:30px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+              <h3 id="searchResultsSummary">Search Results</h3>
+              <span id="resultsCountPill" class="badge-verified">0 Matches</span>
+            </div>
+
+            <div id="searchResultsGrid" class="results-grid"></div>
+            <div id="resultsGrid" class="results-grid" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. CRITICAL EMERGENCY REQUESTS BOARD -->
+    <section id="urgent" class="urgent-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-title">
+            <h2>🚨 Urgent Blood Requests Board</h2>
+            <p>Patients in Jharkhand hospitals (RIMS, BGH, TMH, Sadar Hospitals) requiring immediate transfusions.</p>
+          </div>
+          <div>
+            <button class="btn btn-emergency btn-sm" onclick="openRequestModal()">
+              + Post Emergency Request
+            </button>
+          </div>
+        </div>
+
+        <div class="urgent-grid" id="urgentCardsContainer">
+          <!-- Dynamically populated from /api/requests -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. NEXT DONATION DATE & MEDICAL ELIGIBILITY CALCULATOR WIDGET -->
+    <section id="calculator" class="calc-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-title">
+            <h2 id="calcSectionTitle">Medical Eligibility & Next Donation Calculator</h2>
+            <p id="calcSectionSub">Check your eligibility criteria and find out exactly when you can donate next according to NBTC guidelines.</p>
+          </div>
+        </div>
+
+        <div class="calc-grid">
+          <div class="calc-box">
+            <h3 style="font-size:18px; font-weight:800; margin-bottom:16px;">Enter Health & Donation Parameters</h3>
+
+            <form onsubmit="calculateEligibility(event)">
+              <div class="form-group" style="margin-bottom:16px;">
+                <label style="font-weight:700; margin-bottom:6px; display:block;">Biological Gender (For recovery interval calculation)</label>
+                <div style="display:flex; gap:16px;">
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="radio" name="calcGender" value="male" checked style="accent-color:var(--primary);">
+                    <span>Male (90 days interval)</span>
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                    <input type="radio" name="calcGender" value="female" style="accent-color:var(--primary);">
+                    <span>Female (120 days interval)</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-row-2" style="margin-bottom:16px;">
+                <div class="form-group">
+                  <label for="calcLastDonationDate">Date of Last Blood Donation (Optional)</label>
+                  <input type="date" id="calcLastDonationDate" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="calcAge">Your Age (Years) *</label>
+                  <input type="number" id="calcAge" class="form-control" placeholder="18 - 65" min="15" max="90" value="25" required>
+                </div>
+              </div>
+
+              <div class="form-row-2" style="margin-bottom:18px;">
+                <div class="form-group">
+                  <label for="calcWeight">Body Weight (kg) *</label>
+                  <input type="number" id="calcWeight" class="form-control" placeholder="Min 45 kg" min="30" max="180" value="62" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Health Safety Checklist</label>
+                  <div style="display:flex; flex-direction:column; gap:6px; font-size:13px; margin-top:4px;">
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                      <input type="checkbox" id="calcTattoo" style="accent-color:var(--primary);">
+                      <span>Tattoo / piercing / surgery in last 6 months</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+                      <input type="checkbox" id="calcAlcohol" style="accent-color:var(--primary);">
+                      <span>Alcohol consumed in past 24 hrs</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width:100%;">
+                ⏱️ Calculate Medical Eligibility & Next Date
+              </button>
+            </form>
+          </div>
+
+          <div class="calc-result-box" id="calcResultBox">
+            <div style="font-size:42px; margin-bottom:8px;">🩺</div>
+            <h4 style="font-size:18px; font-weight:800; margin-bottom:6px;">Eligibility Status</h4>
+            <p style="color:var(--muted); font-size:13px;">
+              Fill in your parameters and click calculate to check your voluntary donation timeline.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. BECOME A VOLUNTARY DONOR -->
+    <section id="donate" class="register-section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-head-title">
+            <h2>Register as a Voluntary Lifesaver</h2>
+            <p>Join the verified network across Ranchi, Bokaro, Jamshedpur, Ramgarh, Deoghar, and Hazaribagh.</p>
+          </div>
+        </div>
+
+        <div class="register-grid">
+          <!-- Left Info & Eligibility Sidebar -->
+          <div class="register-sidebar">
+            <h3 style="font-size:24px; font-weight:800; margin-bottom:12px;">Be Someone's Lifesaver ♥</h3>
+            <p style="font-size:14px; color:#ffe4e6; line-height:1.6; margin-bottom:20px;">
+              Your voluntary donation takes just 15 minutes and can save up to 3 lives. Help accident trauma victims, thalassemia patients, and mothers during childbirth in Jharkhand.
+            </p>
+
+            <h4 style="font-size:16px; margin-bottom:10px;">Voluntary Donor Checklist:</h4>
+            <ul class="eligibility-list">
+              <li><span>✓ Age 18 to 65 years, weight &gt; 45 kg.</span></li>
+              <li><span>✓ At least 90 days since last donation.</span></li>
+              <li><span>✓ Hemoglobin &gt; 12.5 g/dL with normal vitals.</span></li>
+              <li><span>✓ 100% voluntary donation — no money or commercial fees allowed.</span></li>
+            </ul>
+          </div>
+
+          <!-- Right Registration Form -->
+          <div class="register-form-card">
+            <h3 style="font-size:20px; font-weight:800; margin-bottom:18px;">Donor Registration Form</h3>
+
+            <form id="donorRegisterForm" onsubmit="handleDonorRegistration(event)">
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="regName">Full Legal Name *</label>
+                  <input type="text" id="regName" class="form-control" placeholder="e.g. Aman Verma" required maxlength="100">
+                </div>
+
+                <div class="form-group">
+                  <label for="regPhone">Mobile Number (WhatsApp) *</label>
+                  <input type="tel" id="regPhone" class="form-control" placeholder="e.g. +91 98351 12345" required maxlength="20">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="regBloodGroup">Blood Group *</label>
+                  <select id="regBloodGroup" class="form-control" required>
+                    <option value="">Select Blood Group</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="regEmail">Email Address (Optional)</label>
+                  <input type="email" id="regEmail" class="form-control" placeholder="donor@example.com">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="regCity">City *</label>
+                  <select id="regCity" class="form-control" required>
+                    <option value="">Select Jharkhand City</option>
+                    <option value="Ranchi">Ranchi</option>
+                    <option value="Bokaro">Bokaro</option>
+                    <option value="Jamshedpur">Jamshedpur</option>
+                    <option value="Ramgarh">Ramgarh</option>
+                    <option value="Deoghar">Deoghar</option>
+                    <option value="Hazaribagh">Hazaribagh</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="regLocality">Locality / Sector *</label>
+                  <input type="text" id="regLocality" class="form-control" placeholder="e.g. Morabadi, Bariatu, Lalpur, Sector 4, Chas..." required>
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label for="regAge">Age (18-65)</label>
+                  <input type="number" id="regAge" min="18" max="65" class="form-control" placeholder="e.g. 26">
+                </div>
+
+                <div class="form-group">
+                  <label for="regGender">Gender</label>
+                  <select id="regGender" class="form-control">
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-bottom:20px;">
+                <label for="regAddress">Full Residential Address (Optional)</label>
+                <input type="text" id="regAddress" class="form-control" placeholder="e.g. Near Morabadi Ground, Ranchi">
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="autoFillDonorGPS()">
+                  📍 Auto-Fill Locality with GPS
+                </button>
+
+                <button type="submit" class="btn btn-primary" id="btnSubmitDonor">
+                  ❤️ Register as Voluntary Lifesaver
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 10. MODAL: POST EMERGENCY BLOOD REQUEST -->
+  <div class="modal-overlay" id="requestModal" onclick="if(event.target.id==='requestModal') closeRequestModal()">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="closeRequestModal()">✕</button>
+      <h3 style="font-size:22px; font-weight:800; margin-bottom:6px; color:var(--primary);">
+        🚨 Create Emergency Blood Request
+      </h3>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:20px;">
+        Publish an urgent transfusion request across verified donors and blood centers in Jharkhand.
+      </p>
+
+      <form id="emergencyRequestForm" onsubmit="submitEmergencyBloodRequest(event)">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="reqPatient">Patient Name *</label>
+            <input type="text" id="reqPatient" class="form-control" placeholder="Patient's Full Name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reqBloodGroup">Required Blood Group *</label>
+            <select id="reqBloodGroup" class="form-control" required>
+              <option value="">Select Group</option>
+              <option>A+</option>
+              <option>A-</option>
+              <option>B+</option>
+              <option>B-</option>
+              <option>AB+</option>
+              <option>AB-</option>
+              <option>O+</option>
+              <option>O-</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="reqComponent">Component Needed *</label>
+            <select id="reqComponent" class="form-control" required>
+              <option value="Whole blood">Whole Blood</option>
+              <option value="Red cells">Red Cells (PRBC)</option>
+              <option value="Platelets">Platelets (PRP/SDP)</option>
+              <option value="Plasma">Plasma (FFP)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="reqUnits">Units Needed *</label>
+            <input type="number" id="reqUnits" class="form-control" min="1" max="10" value="1" required>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="reqHospital">Hospital Name & Ward *</label>
+            <input type="text" id="reqHospital" class="form-control" placeholder="e.g. RIMS Emergency, BGH ICU, TMH Jamshedpur..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="reqCity">City *</label>
+            <select id="reqCity" class="form-control" required>
+              <option value="">Select City</option>
+              <option value="Ranchi">Ranchi</option>
+              <option value="Bokaro">Bokaro</option>
+              <option value="Jamshedpur">Jamshedpur</option>
+              <option value="Ramgarh">Ramgarh</option>
+              <option value="Deoghar">Deoghar</option>
+              <option value="Hazaribagh">Hazaribagh</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="reqLocality">Hospital Locality / Sector *</label>
+            <input type="text" id="reqLocality" class="form-control" placeholder="e.g. Bariatu, Lalpur, Sector 4, Bistupur..." required>
+          </div>
+
+          <div class="form-group">
+            <label for="reqContactPhone">Attendant Phone Number *</label>
+            <input type="tel" id="reqContactPhone" class="form-control" placeholder="e.g. +91 98350 99881" required>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:16px;">
+          <label for="reqContactName">Attendant Name / Relation</label>
+          <input type="text" id="reqContactName" class="form-control" placeholder="e.g. Brother, Family Member">
+        </div>
+
+        <div class="form-group" style="margin-bottom:24px;">
+          <label for="reqUrgency">Urgency Priority</label>
+          <select id="reqUrgency" class="form-control">
+            <option value="Critical">Critical (Immediate surgery / ICU / Life Threat)</option>
+            <option value="High">High (Needed within 12 hours)</option>
+            <option value="Normal" selected>Normal (Needed within 24-48 hours)</option>
+          </select>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px;">
+          <button type="button" class="btn btn-outline" onclick="closeRequestModal()">Cancel</button>
+          <button type="submit" class="btn btn-emergency">Publish Emergency Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 11. MODAL: REPORT SUSPICIOUS PROFILE / FRAUD (ANTI-BROKER) -->
+  <div class="modal-overlay" id="reportModal" onclick="if(event.target.id==='reportModal') closeReportModal()">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="closeReportModal()">✕</button>
+      <h3 style="font-size:22px; font-weight:800; margin-bottom:6px; color:#b91c1c;">
+        🚨 Report Suspicious Profile or Broker
+      </h3>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:16px;">
+        LifeDrop has zero tolerance for fake profiles, commercial blood sellers, or fraudulent donation requests.
+      </p>
+
+      <div style="background:#fee2e2; color:#991b1b; padding:10px 14px; border-radius:8px; font-size:13px; font-weight:700; margin-bottom:18px;" id="repTargetDisplay">
+        Reporting Target
+      </div>
+
+      <form id="reportForm" onsubmit="submitSuspiciousReport(event)">
+        <input type="hidden" id="repTargetType">
+        <input type="hidden" id="repTargetId">
+        <input type="hidden" id="repTargetName">
+
+        <div class="form-group" style="margin-bottom:16px;">
+          <label for="repReason">Violation Reason *</label>
+          <select id="repReason" class="form-control" required>
+            <option value="">Select Reason</option>
+            <option value="Demanding Money / Commercial Seller">Demanding Money / Advance UPI / Transportation Charges</option>
+            <option value="Commercial Broker / Dalal">Commercial Middleman / Blood Agent</option>
+            <option value="Fake Contact / Number Not Working">Fake or Wrong Contact Phone Number</option>
+            <option value="Fake Hospital Request">Fraudulent Hospital Request (No Patient Admitted)</option>
+            <option value="Harassment / Inappropriate Behavior">Harassment or Inappropriate Conduct</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:16px;">
+          <label for="repDetails">Describe the Incident (Include Screenshots/Details if any)</label>
+          <textarea id="repDetails" class="form-control" style="height:90px; resize:vertical;" placeholder="Please describe what happened (e.g. caller demanded Rs 2000 on WhatsApp before agreeing to donate)..." required></textarea>
+        </div>
+
+        <div class="form-group" style="margin-bottom:24px;">
+          <label for="repContact">Your Contact Phone / Email (Kept Strictly Confidential)</label>
+          <input type="text" id="repContact" class="form-control" placeholder="So our safety team can follow up" required>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px;">
+          <button type="button" class="btn btn-outline" onclick="closeReportModal()">Cancel</button>
+          <button type="submit" class="btn btn-emergency">Submit Fraud Report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 12. MODAL: DIGITAL VOLUNTARY DONOR ID CARD & CERTIFICATE -->
+  <div class="modal-overlay" id="donorCardModal" onclick="if(event.target.id==='donorCardModal') closeDonorCardModal()">
+    <div class="modal-dialog" style="max-width:540px;">
+      <button class="modal-close" onclick="closeDonorCardModal()">✕</button>
+      <div style="text-align:center; margin-bottom:16px;">
+        <h3 style="font-size:22px; font-weight:800; color:var(--primary);">
+          🪪 Digital Voluntary Lifesaver ID Card
+        </h3>
+        <p style="color:var(--muted); font-size:13px;">Official State Health & Voluntary Blood Donor Credential</p>
+      </div>
+
+      <div class="donor-card-modal-body">
+        <div class="donor-id-card" id="printableDonorCard">
+          <div class="card-header-row">
+            <div class="card-brand">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 21.5C7.5 21.5 4 18 4 13.5C4 9.5 9.5 3.5 11.2 1.6C11.6 1.1 12.4 1.1 12.8 1.6C14.5 3.5 20 9.5 20 13.5C20 18 16.5 21.5 12 21.5Z" fill="#f43f5e"/>
+              </svg>
+              <span>LifeDrop</span> JHARKHAND
+            </div>
+            <div class="card-type-badge">Voluntary Lifesaver</div>
+          </div>
+
+          <div class="card-main-content">
+            <div class="card-donor-info">
+              <h3 id="dcDonorName">Aman Verma</h3>
+              <div class="card-donor-meta">
+                <span>📍 <strong id="dcLocation">Morabadi, Ranchi</strong></span>
+                <span>📞 <span id="dcPhone">+91 98351 12345</span></span>
+                <span style="color:#6ee7b7; font-weight:700;">✓ Verified Human Lifesaver</span>
+              </div>
+            </div>
+            <div class="card-blood-badge">
+              <span id="dcBloodGroup">A+</span>
+              <span>GROUP</span>
+            </div>
+          </div>
+
+          <div class="card-footer-row">
+            <div>
+              <div class="card-id-text" id="dcCardId">LD-JH-00001</div>
+              <div id="dcMemberSince" style="font-size:10px; opacity:0.8;">Member since 2026</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <div style="text-align:right; font-size:9px; line-height:1.2; opacity:0.85;">
+                SECURE QR<br>VERIFICATION
+              </div>
+              <div class="card-qr-box">
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="#0f172a">
+                  <rect x="2" y="2" width="10" height="10" fill="#0f172a"/>
+                  <rect x="4" y="4" width="6" height="6" fill="#fff"/>
+                  <rect x="24" y="2" width="10" height="10" fill="#0f172a"/>
+                  <rect x="26" y="4" width="6" height="6" fill="#fff"/>
+                  <rect x="2" y="24" width="10" height="10" fill="#0f172a"/>
+                  <rect x="4" y="26" width="6" height="6" fill="#fff"/>
+                  <rect x="15" y="15" width="6" height="6" fill="#be123c"/>
+                  <rect x="14" y="2" width="8" height="3" fill="#0f172a"/>
+                  <rect x="2" y="14" width="3" height="8" fill="#0f172a"/>
+                  <rect x="24" y="24" width="10" height="10" fill="#0f172a"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="donor-card-actions" style="display:flex; gap:12px; width:100%; justify-content:center; margin-top:8px;">
+          <button type="button" class="btn btn-outline" onclick="closeDonorCardModal()">Close</button>
+          <button type="button" class="btn btn-primary" onclick="printDonorCard()">🖨️ Print / Download ID Card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 13. MODAL: CAMP PRE-REGISTRATION -->
+  <div class="modal-overlay" id="campRegisterModal" onclick="if(event.target.id==='campRegisterModal') closeCampRegisterModal()">
+    <div class="modal-dialog" style="max-width:480px;">
+      <button class="modal-close" onclick="closeCampRegisterModal()">✕</button>
+      <h3 style="font-size:22px; font-weight:800; margin-bottom:6px; color:var(--primary);">
+        🙋 Pre-Register for Blood Camp
+      </h3>
+      <p style="color:var(--muted); font-size:14px; margin-bottom:14px;" id="campRegCampTitleDisplay">
+        Mega Voluntary Blood Donation Camp
+      </p>
+
+      <form id="campRegisterForm" onsubmit="submitCampRegistration(event)">
+        <input type="hidden" id="campRegCampId">
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label for="campRegName">Your Full Name *</label>
+          <input type="text" id="campRegName" class="form-control" placeholder="e.g. Rahul Sharma" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label for="campRegPhone">Contact Phone Number (WhatsApp) *</label>
+          <input type="tel" id="campRegPhone" class="form-control" placeholder="e.g. +91 98351 99999" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom:20px;">
+          <label for="campRegBlood">Your Blood Group *</label>
+          <select id="campRegBlood" class="form-control" required>
+            <option value="">Select Blood Group</option>
+            <option>A+</option><option>A-</option>
+            <option>B+</option><option>B-</option>
+            <option>AB+</option><option>AB-</option>
+            <option>O+</option><option>O-</option>
+          </select>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px;">
+          <button type="button" class="btn btn-outline" onclick="closeCampRegisterModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm Volunteer Slot</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 14. MODAL: HOSPITAL / BLOOD BANK ADMIN PORTAL -->
+  <div class="modal-overlay" id="adminModal" onclick="if(event.target.id==='adminModal') closeAdminModal()">
+    <div class="modal-dialog" style="max-width:760px; max-height:90vh; overflow-y:auto;">
+      <button class="modal-close" onclick="closeAdminModal()">✕</button>
+
+      <!-- Auth Passcode Gate -->
+      <div id="adminAuthSection" style="padding:20px 0; text-align:center;">
+        <div style="font-size:36px; margin-bottom:8px;">🔒</div>
+        <h3 style="font-size:22px; font-weight:800; margin-bottom:8px;">Hospital In-Charge Authorization</h3>
+        <p style="color:var(--muted); font-size:14px; margin-bottom:20px;">
+          Enter your hospital security passcode to update live stock units and moderate suspicious reports.
+        </p>
+
+        <form onsubmit="verifyAdminPasscode(event)" style="max-width:320px; margin:0 auto;">
+          <div class="form-group" style="margin-bottom:16px;">
+            <input type="password" id="adminPasscodeInput" class="form-control" placeholder="Enter PIN (Default: 1234)" required style="text-align:center; font-size:18px; letter-spacing:4px;">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Unlock Admin Console</button>
+        </form>
+      </div>
+
+      <!-- Main Admin Portal -->
+      <div id="adminPortalSection" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div>
+            <h3 style="font-size:22px; font-weight:800; color:var(--dark);">🏥 Hospital Admin Console</h3>
+            <span style="font-size:12px; color:var(--emerald); font-weight:700;">● Authorized Session Active</span>
+          </div>
+        </div>
+
+        <div class="admin-tabs">
+          <button class="admin-tab-btn active" id="tabBtn_stock" onclick="switchAdminTab('stock')">📦 Live Inventory Manager</button>
+          <button class="admin-tab-btn" id="tabBtn_fraud" onclick="switchAdminTab('fraud')">🛡️ Anti-Fraud Moderation</button>
+        </div>
+
+        <!-- Tab 1: Live Stock Management -->
+        <div id="adminTabStock">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+            <label for="adminCenterSelect" style="font-size:13px; font-weight:700; white-space:nowrap;">Select Facility:</label>
+            <select id="adminCenterSelect" class="form-control" onchange="loadAdminCenterStock(this.value)">
+              <option value="">Loading facilities...</option>
+            </select>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Blood Group</th>
+                  <th>Component</th>
+                  <th>Units In Stock</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminStockTableBody">
+                <tr><td colspan="4" style="text-align:center; padding:20px;">Loading stock...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab 2: Fraud & Suspicious Moderation -->
+        <div id="adminTabFraud" style="display:none;">
+          <div style="overflow-x:auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Flagged Target</th>
+                  <th>Reason</th>
+                  <th>Details</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminFraudTableBody">
+                <tr><td colspan="6" style="text-align:center; padding:20px;">Loading reports...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15. TOAST NOTIFICATIONS WRAPPER -->
+  <div id="toastContainer"></div>
+
+  <!-- 13. PROFESSIONAL FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom:14px;">
+            <img src="images/logo.svg" alt="LifeDrop Logo" style="filter:brightness(0) invert(1);">
+            <span style="color:white">LifeDrop</span>
+          </div>
+          <p style="line-height:1.7; margin-bottom:18px;">
+            Jharkhand's humanitarian blood donation and emergency healthcare network. Connecting voluntary lifesavers directly with patients in Ranchi, Bokaro, Jamshedpur, Ramgarh, Deoghar, and Hazaribagh.
+          </p>
+          <span style="font-size:12px; color:#64748b;">Zero Commercialization • NBTC & State Health Compliant</span>
+        </div>
+
+        <div class="footer-col">
+          <h4>Key Jharkhand Hubs</h4>
+          <ul class="footer-links">
+            <li><a href="#location-map" onclick="MapEngine.flyToCity('ranchi')">Ranchi (Morabadi, Bariatu, Lalpur)</a></li>
+            <li><a href="#location-map" onclick="MapEngine.flyToCity('bokaro')">Bokaro (Sectors 1-12 & Chas)</a></li>
+            <li><a href="#location-map" onclick="MapEngine.flyToCity('jamshedpur')">Jamshedpur (TMH, Bistupur, Sakchi)</a></li>
+            <li><a href="#location-map" onclick="MapEngine.flyToCity('ramgarh')">Ramgarh Cantt</a></li>
+            <li><a href="#location-map" onclick="MapEngine.flyToCity('deoghar')">Deoghar (AIIMS & Sadar)</a></li>
+            <li><a href="#location-map" onclick="MapEngine.flyToCity('hazaribagh')">Hazaribagh</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Safety & Verification</h4>
+          <ul class="footer-links">
+            <li><a href="#report-alert" onclick="openReportModal('donor', 0, 'Commercial Broker')">Report Fraud Profile</a></li>
+            <li><a href="#donate">Volunteer Donor Signup</a></li>
+            <li><a href="#urgent">Urgent Patient Requests</a></li>
+            <li><a href="#find-blood">Check Blood Inventory</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Emergency Contacts</h4>
+          <p style="margin-bottom:8px;">For critical medical emergencies in Jharkhand:</p>
+          <p><strong style="color:white; font-size:16px;">Ambulance: 108 / 102</strong></p>
+          <p><strong style="color:var(--primary-light); font-size:16px;">LifeDrop Desk: 1800-LIFE-DROP</strong></p>
+          <p style="margin-top:8px; font-size:12px;">Official email: care@lifedrop.jharkhand.org</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © <span id="currentYear"></span> LifeDrop Network Jharkhand. All rights reserved.
+        </div>
+        <div>
+          Built with precision for humanitarian emergency healthcare.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Clean External Modular Javascript Architecture -->
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

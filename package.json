@@ -1,0 +1,30 @@
+{
+  "name": "lifedrop-blood-donation-platform",
+  "version": "2.0.0",
+  "description": "Professional Blood Donation, Real-Time Inventory, and Location-Based Donor Platform for Jharkhand and Nationwide",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "setup:mysql": "node setup-mysql.js"
+  },
+  "keywords": [
+    "blood-donation",
+    "jharkhand",
+    "ranchi",
+    "bokaro",
+    "jamshedpur",
+    "mysql",
+    "express",
+    "nodejs"
+  ],
+  "author": "LifeDrop Team",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql2": "^3.12.0"
+  }
+}
+
